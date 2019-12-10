@@ -1,0 +1,93 @@
+/*
+GLOBALS
+*/
+
+html {
+    font-size: 62.5%; /* esto equivale a definir font-size: 10px;*/
+  }
+  
+  body {
+    font-size: 1.3rem;
+    font-family: "Nunito Sans", sans-serif;
+    color: black;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Nunito Sans", sans-serif;
+  }
+  p {
+    line-height: 1.4;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .container {
+    max-width: 960px;
+    width: 100%;
+    margin: auto;
+  }
+  
+  /* 
+  MAIN 
+  */
+
+  .banner-shop figure img {
+    width: 100%;
+  }
+
+  .tienda{
+      width: 100%;
+      display: flex;
+      /* border: solid; */
+  }
+
+  .tienda-menu{
+      width: 63rem;
+      /* border: solid; */
+  }
+
+  h2{
+      font-size: 1.7rem;
+      font-weight: bold;
+      padding:4rem 0rem 1rem 0rem;
+  }
+
+.tienda-menu-opcion{
+    padding: 1rem 0rem 0rem 2rem;
+}  
+  
+  .lista-articulos{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      /* border: solid; */
+  }
+
+.lista-paginacion{
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    /* padding: 5rem 0rem 5rem 0rem; */
+}
+
+.paginacion-redondo{
+    width: 3rem;
+    height: 3rem;
+    background-color: #F5F5F5;
+    border-radius: 3rem;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    margin-right: 1em;
+}
+
+.pagina-activa{
+    background-color: #87B106;
+    color: #FFF;
+}

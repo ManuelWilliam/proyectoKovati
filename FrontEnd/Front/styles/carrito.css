@@ -1,0 +1,212 @@
+/*
+GLOBALS
+*/
+
+html {
+  font-size: 62.5%; /* esto equivale a definir font-size: 10px;*/
+}
+
+body {
+  font-size: 1.3rem;
+  font-family: "Nunito Sans", sans-serif;
+  color: black;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Nunito Sans", sans-serif;
+}
+p {
+  line-height: 1.4;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.container {
+  max-width: 960px;
+  width: 100%;
+  margin: auto;
+  /* border: solid; */
+}
+
+/* 
+  MAIN 
+  */
+
+.banner-shop figure img {
+  width: 100%;
+}
+
+.carrito {
+  padding-top: 7rem;
+}
+
+.carrito-cabecera {
+  background-color: #87b106;
+  display: flex;
+  color: #fff;
+  width: 100%;
+  height: 5rem;
+  align-items: center;
+  text-align: center;
+}
+
+.cabecera-imagen {
+  width: 15%;
+}
+
+.cabecera-producto {
+  width: 40%;
+}
+
+.cabecera-precio {
+  width: 13%;
+}
+
+.cabecera-cantidad {
+  width: 9%;
+}
+
+.cabecera-total {
+  width: 13%;
+}
+
+.cabecera-retirar {
+  width: 10%;
+}
+
+.carrito-detalle {
+  display: flex;
+  color: #000;
+  width: 100%;
+  height: 7rem;
+  /* align-items: center; */
+  /* text-align: center; */
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.detalle-imagen {
+  width: 15%;
+  height: 100%;
+  border-right: 1px solid black;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+}
+
+.detalle-imagen figure {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.detalle-imagen figure img {
+  width: 60%;
+}
+
+.detalle-producto {
+  width: 40%;
+  height: 100%;
+  text-align: left;
+  border-right: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detalle-precio {
+  width: 13%;
+  height: 100%;
+  border-right: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detalle-cantidad {
+  width: 9%;
+  height: 100%;
+  border-right: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detalle-total {
+  width: 13%;
+  height: 100%;
+  border-right: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detalle-eliminar {
+  width: 10%;
+  height: 100%;
+  border-right: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.carrito-resumen{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    /* border: solid; */
+}
+
+.resumen {
+  width: 30rem;
+  padding-top: 3rem;
+  /* border: solid; */
+}
+
+.resumen-titulo {
+  border-bottom: 1px solid black;
+  background-color: #f8f8f8;
+  font-size: 1.6rem;
+  font-weight: bold;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  padding: 0rem 0rem 0rem 1rem;
+}
+
+.resumen-total {
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  padding: 0rem 1rem 0rem 1rem;
+}
+
+.resumen-pago {
+  background-color: #87b106;
+  width: 100%;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* .resumen {
+  display: flex;
+  align-items: flex-end;
+} */
+
+
+/* .resumen-pago{
+    align-items: flex-end;
+} */

@@ -1,0 +1,46 @@
+.list-product {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.product-afines {
+  width: 18rem;
+  /* border: solid; */
+}
+
+.product-afines figure img {
+  width: 100%;
+}
+
+.product-name-2 {
+  font-weight: bold;
+}
+
+.price-old-2 {
+  color: gray;
+  font-size: 1.2rem;
+}
+
+.price-new-2 {
+  color: gray;
+  font-weight: bold;
+  font-size: 2rem;
+  color: #d26b31;
+}
+
+.valoracion-2 {
+  color: orange;
+}
+.carrito-add {
+  background-color: #87b106;
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.carrito-add i {
+  color: white;
+}
