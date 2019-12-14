@@ -1,0 +1,8 @@
+Nombre poryecto:
+
+	ProyectoKovati
+		admin.py
+		ProyectoKovati
+			settings.py
+		AppKovati
+			models.py

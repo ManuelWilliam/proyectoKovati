@@ -1,0 +1,221 @@
+Creamos un directorio para nuestro proyecto y creamos el proyecto
+	cd "C:\Users\LP-01\Desktop\Programacion Web\Python\Dia 23\Back"
+	cd Django_Herencia
+	django-admin startproject ecommerce
+	cd ecommerce
+Creamos una aplicacion de cualquiera de las dos maneras
+	django-admin startapp ventas
+	o
+	python manage.py startapp ventas
+Iniciamos el VSCode.
+
+
+Editamos el archivo "settings.py"
+	en el grupo "INSTALLED_APPS = [" agregamos la linea:
+		'ventas',
+		'bootstrap4',
+    
+	Comentamos el drupo DATABASES y agregamos nuestra nueva cadena de conexion, debe quedar de la siguiente manera:
+		
+		# DATABASES = {
+		#     'default': {
+		#         'ENGINE': 'django.db.backends.sqlite3',
+		#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		#     }
+		# }
+		
+		DATABASES = {
+		   'default': {
+		       'ENGINE': 'django.db.backends.mysql',
+		       'NAME': 'ventas',
+		       'USER': 'root',
+		       'PASSWORD': '',
+		       'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+		       'PORT': '3306',
+		       'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+		   },
+		}
+
+Vamos a trabajar con una BD existente, y la conectamos a DJANGO, este proceso se llama "Heredar la base de datos"
+	en la consola de windows dentro del directorio de la aplicacion creada ejecutamos la siguiente linea:
+		python manage.py inspectdb
+	ahora migramos la BD a DJango, para ello ejecutamos el siguiente comando:
+		python manage.py inspectdb>ventas/models.py
+	Con el comando anterior Django inspecciona la BD original y crea o vuelca la estructura en el archivo "ventas/models.py"
+	Ojo: si bien a creado el archivo "models.py" esto debe ser editado eliminando las lineas siguientes:
+		managed = False
+	Cambiar la lineas de ForeignKey de la siguiente manera:
+		antes:
+			idventa = models.ForeignKey('Venta', models.DO_NOTHING, db_column='idventa')
+		AHORA:
+			idventa = models.ForeignKey('Venta', on_delete=models.CASCADE, db_column='idventa')
+	
+Ahora editamos el archivo "admin.py"
+	from .models import Categoria, Detalle, Empleado, Pago, Producto, TipoPago, Venta, Usuario
+	# Register your models here.
+	
+	admin.site.register(Empleado)
+	admin.site.register(Usuario)
+	admin.site.register(Categoria)
+	admin.site.register(Detalle)
+	admin.site.register(Pago)
+	admin.site.register(Producto)
+	admin.site.register(TipoPago)
+	admin.site.register(Venta)
+
+preparamos los archivos para hacer la migracion de Django a MySQL
+	python manage.py makemigrations ventas
+migramos las tablas a la base de datos MySQL
+	python manage.py migrate
+Con este comando se migramos las tablas nuevas de Django a MySQL y las tablas que ya existen en la BD no seran chancadas.
+creamos el super usuario del proyecto Django para administrar todos los recursos de Django
+	python manage.py createsuperuser
+	System check identified some issues:
+	
+	WARNINGS:
+	ventas.Usuario.idemp: (fields.W342) Setting unique=True on a ForeignKey has the same effect as using a OneToOneField.
+	        HINT: ForeignKey(unique=True) is usually better served by a OneToOneField.
+	Username (leave blank to use 'lp-01'): manuel
+	Email address: manuel@gmail.com
+	Password:
+	Password (again):
+	The password is too similar to the username.
+	This password is too short. It must contain at least 8 characters.
+	This password is too common.
+	Bypass password validation and create user anyway? [y/N]: y
+	Superuser created successfully.
+	
+	el usuario y password es: "william"
+
+Para hacer cambios en la BD desde el modelo que puedo crear o modificar una tabla debemos instalar lo siguiente:
+	pip install django-autoslug-iplweb==1.9.4
+	pip install pillow==5.3.0
+	pip install django-bootstrap4==0.0.7
+	pip install djangorestframework==3.8.2
+
+Ahora vamos a modificar un modelo o tabla de la BD pero desde Django, para ello debemos ir a Django y modificar el archivo "models.py"
+	el campo slug, es un campo especial que se asocia a un campo de texto y lo que hace es quitar los espacios en blanco y convertirlo a minuscula toda la cadena del texto o campo asociado
+	
+	todos los campos "managed" que tienen el valor "False" debemos cambiarlo a "True" como la linea siguiente:
+		managed = True
+	
+		from autoslug import AutoSlugField
+	class Categoria
+		# agregar las siguientes lineas a la clase categoria
+	 	slug =AutoSlugField(populate_from='nombre')
+	 	imagen = models.ImageField(upload_to="categorias",blank=True)
+	 	descripcion = models.TextField(blank=True)
+	 	destacado = models.BooleanField(default=False)
+	 	activo=models.BooleanField(default=True)
+	 	creado = models.DateTimeField(auto_now_add=True)
+	 	modificado= models.DateTimeField(auto_now_add=True)
+	    	def __str__(self):
+	    		return self.nombre
+ 	
+ 		
+ 		class Meta:
+ 			verbose_name_plural="Categorias"
+
+
+	class Producto
+		slug =AutoSlugField(populate_from='nombre')
+		imagen = models.ImageField(upload_to="productos",blank=True)		# el campo "ImageField" cuando se migra a la BD se transforma en tipo texto porque en este campo se guarda la ruta de la imagen o video o cualquier binario que se quiere guardar en este campo, y una copia del archivo (binario, imagen, otros) se guarda en un directorio aparte dentro del servidor, en este caso, se creara un directorio "media" que es la carpeta por defautl y dentro de este directorio se creara el directorio "productos"
+		marca = models.CharField(max_length=250,blank=True)
+		descripcion = models.TextField(blank=True)
+		destacado = models.BooleanField(default=False)
+		activo=models.BooleanField(default=True)
+		creado = models.DateTimeField(auto_now_add=True)
+		modificado= models.DateTimeField(auto_now_add=True)
+		def __str__(self):
+			return self.nombre
+        
+	
+	class Usuario(models.Model):
+		# editar la primera linea de esta clase por la siguiente linea
+		idemp = models.OneToOneField(Empleado,on_delete=models.CASCADE,primary_key=True)
+
+Para migrar el modelo debemos hacer lo siguiete:
+	eliminar la BD existente, previamente se saco un BK del a BD
+	crear la BD nuevamente
+	en el proyecto de Django, debemos eliminar los directorios "__pycache__" que esta dentro del directorio "ventas"  y "ecommerce" y luego eliminamos tambien el directorio "migrations" que esta en el directorio "ventas"
+	ejecutamos la lineas:
+		python manage.py makemigrations ventas
+		python manage.py migrate
+
+Editamos el directorio "settings.py" y agreamos la siguiente linea al final del archivo:
+	MEDIA_URL ='/media/'
+	MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+
+
+
+
+CREANDO EL FRONT PARA QUE SE COMUNIQUE CON NUESTRA BD
+
+Dentro de nuestro proyecto "ecommerce/ventas" creamos la siguiente estructura de directorios:
+	ecommerce
+		+ ecommerce
+		+ ventas
+			+ static
+				+ ventas
+					- css
+					- js
+			+ templates
+				- ventas
+				
+Editamos el archivo "views.py"
+	import ventas.models import Producto, Categoria
+	
+	def home(request):
+	    # creando un API QUERYSET o Consulta a nuestra BD
+	    productos = Producto.object.filter(activo=True)
+	    categorias = Categoria.object.filter(activo=True)
+	    # creando un diccionario que me permitira pasar los datos de productos y categorias al template o pagina web 
+	    context = {'productos':productos, 'categorias':categorias}
+	    return render(request, 'ventas/home.html',context)
+	
+	def categorias(request, slug):
+	    # el metodo "get" permite filtrar los datos de acuerdo a un valor "slug" su equivalente en SQL seria:
+	    #   select * from categoria where slug = slug 
+	    cat = Categoria.objects.get(slug=slug)
+	    productos = Producto.objects.filter(activo=True, categoria=cat)
+	    categorias = Categoria.objects.filter(activo=True)
+	    context = {'productos':productos, 'categorias':categorias}
+	    return render(request,'ventas/list.html',context)
+	
+	def search(request):
+	    q=request.GET['q']
+	    # las siguientes lineas es como ejecutar la linea de SQL:
+	    # select * from productos where nombre like '%q%'
+	    productos = Producto.objects.filter(activo=True, nombre__icontains=q)
+	    categorias = Categoria.objects.filter(activo=True)
+	    context = {'productos':productos,'categorias':categorias}
+	    return render(request,'ventas/list.html', context)
+
+
+en el directorio "ecommerce/ventas" debemos crear el archivo "views.py"
+	from django.urls import path
+	from ventas import views
+	
+	app_name = 'ventas'
+	
+	urlpatterns = [
+	    path('',views.home, name='home'),       # esta vista es de la ruta de la paguina de inicio, esto se ejecuta cuando el URL esta vacio
+	    path('categorias/<slug>', views.categorias, name='categorias'),
+	    path('search', views.search, name='search')
+	]
+
+
+Luego nos vamos al direcotrio "ecommerce" y ubicamos el archivo "urls.py"
+	from django.conf.urls.static import static
+	from django.contrib import admin
+	from django.urls import path
+	from django.urls import include
+	
+	from Ecommerce import settings
+	
+	urlpatterns = [
+	    path('admin/', admin.site.urls),
+	    path('', include('ventas.urls')),
+	]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+	# la ultima linea permitira a DJANGO encontrar las imagenes en la carpeta "MEDIA"
